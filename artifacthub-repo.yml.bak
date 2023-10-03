@@ -1,4 +1,10 @@
-# Artifact Hub repository metadata file
+repositoryID: 955a04f8-2f43-40d0-8d8f-e58577b14e22
+owners:
+    -  name: Lalit Arora
+       email: lalit.arora.gemalto@gmail.com
+       
+       
+       # Artifact Hub repository metadata file
 #
 # Some settings like the verified publisher flag or the ignored packages won't
 # be applied until the next time the repository is processed. Please keep in
