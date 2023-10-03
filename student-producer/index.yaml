@@ -3,9 +3,9 @@ entries:
   student-producer:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-10-03T17:06:17.1963235+05:30"
+    created: "2023-10-03T18:25:19.4051819+05:30"
     description: A Helm chart for Kubernetes
-    digest: da5f0e786b782be5b67a62b148d6456a83d95c409c11e412aff4100d64d0a5b3
+    digest: 880479b61ce1e6892e6a784621783d5e3b5e39085fa976a3b7c140a95edb22bf
     name: student-producer
     type: application
     urls:
@@ -13,7 +13,7 @@ entries:
     version: 1.1.0
   - apiVersion: v2
     appVersion: 0.0.1-SNAPSHOT
-    created: "2023-10-03T17:06:17.1957655+05:30"
+    created: "2023-10-03T18:25:19.404182+05:30"
     description: A Helm chart for Kubernetes
     digest: d0fd340bd9fc66bac2f14f6126e0278d4ee3c1869e73b9953bc22a3f660427ba
     name: student-producer
@@ -21,4 +21,4 @@ entries:
     urls:
     - student-producer-1.0.0.tgz
     version: 1.0.0
-generated: "2023-10-03T17:06:17.1952149+05:30"
+generated: "2023-10-03T18:25:19.404182+05:30"
