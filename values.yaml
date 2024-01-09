@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: aroralalit/unification-service:1.0.0
+  repository: unification-service-repo/unification-service:1.0.0
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -86,9 +86,10 @@ solution:
     active: false
 
 ssl:
-  keystore: file:/certs/keystore/server-keystore.jks
+  certs: /certs/keystore
+  keystore: server-keystore.jks
   keystorePassword: password
-  truststore: file:/certs/truststore/server-truststore.jks
+  truststore: server-truststore.jks
   truststorePassword: password
 
 server:
@@ -105,4 +106,5 @@ unificationService:
   es4ValidityDateInSeconds: 120
   soapRequestTimeout: 30000
   loggingLevel: DEBUG
-  brokerUrl: tcp://my-artemis-activemq-artemis:61616
+
+configPath: /config

@@ -4,3 +4,6 @@ metadata:
   name: {{ .Chart.Name }}-configmap
 data:
   application.properties: {{ tpl (.Files.Get "data/application.properties") . | quote }}
+  host: postgres
+  name: osl_unification_service
+  brokerUrl: my-artemis-activemq-artemis

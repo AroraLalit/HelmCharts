@@ -10,7 +10,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "unification-service.selectorLabels" . | nindent 6 }}
+    {{- include "unification-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -21,54 +21,59 @@ spec:
         {{- include "unification-service.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-        - image: aroralalit/unification-service:1.0.0
+        - image: {{ .Values.image.repository }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           name: {{ .Chart.Name }}
           ports:
             - containerPort: {{ .Values.service.port }}
           volumeMounts:
-            - mountPath: /config/application.properties
+            - mountPath: {{ .Values.configPath }}/application.properties
               name: osl-config
               subPath: application.properties
-            - mountPath: /certs/keystore/server-keystore.jks
+            - mountPath: {{ .Values.ssl.certs }}/server-keystore.jks
               name: osl-secret
               subPath: server-keystore.jks
-            - mountPath: /certs/truststore/server-truststore.jks
+            - mountPath: {{ .Values.ssl.certs }}/server-truststore.jks
               name: osl-secret
               subPath: server-truststore.jks
           env:
             - name: DB_HOST   # Setting Database host address from configMap
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-conf  # name of configMap
+                  name: {{ .Chart.Name }}-configmap  # name of configMap
                   key: host
             - name: DB_NAME  # Setting Database name from configMap
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-conf
+                  name: {{ .Chart.Name }}-configmap
                   key: name
             - name: POSTGRES_USER  # Setting Database username from Secret
               valueFrom:
                 secretKeyRef:
-                  name: postgres-credentials # Secret Name
+                  name: {{ .Chart.Name }}-secret # Secret Name
                   key: postgres_user
             - name: POSTGRES_PASSWORD # Setting Database password from Secret
               valueFrom:
                 secretKeyRef:
-                  name: postgres-credentials
+                  name: {{ .Chart.Name }}-secret
                   key: postgres_password
+            - name: BROKER_URL # Setting AMQ_USER from Secret
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Chart.Name }}-configmap
+                  key: brokerUrl
             - name: AMQ_USER # Setting AMQ_USER from Secret
-              value: admin
-{{/*              valueFrom:*/}}
-{{/*                secretKeyRef:*/}}
-{{/*                  name: artemis-credentials*/}}
-{{/*                  key: artemis-user*/}}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-secret
+                  key: artemis-user
             - name: AMQ_PASSWORD # Setting AMQ_PASSWORD from Secret
-              value: admin
-{{/*              valueFrom:*/}}
-{{/*                secretKeyRef:*/}}
-{{/*                  name: artemis-credentials*/}}
-{{/*                  key: artemis-password*/}}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-secret
+                  key: artemis-password
+            - name: PATH # Setting path for configs like application properties and log4j.xml
+              value: {{ .Values.configPath }}
 
       volumes:
         - name: osl-secret
